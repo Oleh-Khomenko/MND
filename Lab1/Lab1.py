@@ -1,9 +1,9 @@
 import random
 
-a0 = 3
-a1 = 4
-a2 = 2
-a3 = 3
+a0 = random.randint(225, 225 ** 2)
+a1 = random.randint(225, 225 ** 2)
+a2 = random.randint(225, 225 ** 2)
+a3 = random.randint(225, 225 ** 2)
 
 x1 = [random.randint(0, 20) for _ in range(8)]
 x2 = [random.randint(0, 20) for _ in range(8)]
