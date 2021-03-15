@@ -3,7 +3,7 @@ import numpy as np
 import random as rnd
 
 m = 5
-y_min, y_max = -2050, -1950
+y_min, y_max = -50, 50
 
 x1_min, x1_max = -25, -5
 x2_min, x2_max = 15, 50
