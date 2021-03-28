@@ -106,7 +106,12 @@ print("σθ =", teta_sigma, '\n')
 print("Fuv1 =", Fuv1, "\nFuv2 =", Fuv2, "\nFuv3 =", Fuv3, '\n')
 print("θuv1 =", TetaUV1, "\nθuv2 =", TetaUV2, "\nθuv3 =", TetaUV3, '\n')
 print("Ruv1 =", Ruv1, "\nRuv2 =", Ruv2, "\nRuv3 =", Ruv3, '\n')
-print("Однорідна дисперсія:", self_dispersion(), '\n')
+D = self_dispersion()
+if D is False:
+    print('Дисперсія не однорідна!')
+    m += 1
+else:
+    print("Однорідна дисперсія:", D, '\n')
 print("mx1:", mx1, "\nmx2:", mx2, "\nmy:", my, '\n')
 print("a1:", a1, "\na2:", a2, "\na3:", a3)
 print("a11:", a11, "\na22:", a22, '\n')
