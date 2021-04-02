@@ -172,6 +172,8 @@ def main(n, m):
     else:
         print('Математична модель не адекватна експериментальним даним')
 
+    print(f'\nНезначимі коефіцієнти: {[i for i in B if i not in final_k]}')
+
 
 if __name__ == '__main__':
     main(4, 4)
