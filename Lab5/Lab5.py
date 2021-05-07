@@ -3,7 +3,9 @@ import sklearn.linear_model as lm
 from scipy.stats import f, t
 from functools import partial
 from pyDOE2 import *
+from time import time
 
+tms = []
 
 def regression(x, b):
     y = sum([x[i] * b[i] for i in range(len(x))])
@@ -180,7 +182,10 @@ def check(X, Y, B, n, m):
     disp = s_kv(Y, y_aver, n, m)
     print('Дисперсія y:', disp)
 
+    tm = time()
     Gp = kriteriy_cochrana(Y, y_aver, n, m)
+    tms.append(time() - tm)
+
     print(f'Gp = {Gp}')
     if Gp < G_kr:
         print(f'З ймовірністю {1 - q} дисперсії однорідні.')
@@ -189,7 +194,10 @@ def check(X, Y, B, n, m):
         m += 1
         main(n, m)
 
+    tm = time()
     ts = kriteriy_studenta(X[:, 1:], Y, y_aver, n, m)
+    tms.append(time() - tm)
+
     print('\nКритерій Стьюдента:\n', ts)
     res = [t for t in ts if t > t_student]
     final_k = [B[i] for i in range(len(ts)) if ts[i] in res]
@@ -210,7 +218,9 @@ def check(X, Y, B, n, m):
         return
     f4 = n - d
 
+    tm = time()
     F_p = kriteriy_fishera(Y, y_aver, y_new, n, m, d)
+    tms.append(time() - tm)
 
     fisher = partial(f.ppf, q=0.95)
     f_t = fisher(dfn=f4, dfd=f3)  # табличне знач
@@ -221,6 +231,9 @@ def check(X, Y, B, n, m):
         print('Математична модель адекватна експериментальним даним')
     else:
         print('Математична модель не адекватна експериментальним даним')
+
+    print('#' * 40)
+    print('Час статичних перевірок: {:.10f}c. {:.10f}c. {:.10f}c.'.format(*tms))
 
 
 def main(n, m):
