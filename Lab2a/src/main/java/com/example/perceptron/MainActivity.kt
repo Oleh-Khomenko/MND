@@ -14,7 +14,8 @@ class MainActivity : AppCompatActivity() {
     fun onSolveClick(view: View) {
         if (editRate.text.isEmpty() ||
             editIterations.text.isEmpty() ||
-            editThreshold.text.isEmpty()) {
+            editThreshold.text.isEmpty()
+        ) {
             return
         }
 
@@ -24,12 +25,31 @@ class MainActivity : AppCompatActivity() {
             listOf(2.0, 3.0) to checkBoxB.isChecked(),
             listOf(5.0, 4.0) to checkBoxD.isChecked()
         )
-        val rate = editRate.text.toString().toDouble()
         val threshold = editThreshold.text.toString().toDouble()
         val iterations = editIterations.text.toString().toInt()
+        var max_counter = 0
+        var optimal_rate = 0.1
+        for (i in 1..999) {
+            val (results, weights) = solve(data, i.toDouble() / 1000, threshold, iterations)
+            var counter = 0
+            for (el in results) {
+                if (el == true) {
+                    counter++
+                }
+            }
+            if (max_counter < counter) {
+                max_counter = counter
+                optimal_rate = i.toDouble() / 1000
+            }
+        }
+        val rate = optimal_rate
         val (results, weights) = solve(data, rate, threshold, iterations)
 
 
-        resultsView.text = "Results:\nClasses: " + results.joinToString(", ") + "\nWeights: " + weights.joinToString(", ") + "\nIterations: " + iterations.toString();
+
+        resultsView.text =
+            "Results:\nBest rate: " + optimal_rate + "\nClasses: " + results.joinToString(", ") + "\nWeights: " + weights.joinToString(
+                ", "
+            ) + "\nIterations: " + iterations.toString();
     }
 }
