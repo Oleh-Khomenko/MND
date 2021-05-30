@@ -79,7 +79,7 @@ def a(first, second):
     return need_a
 
 
-def find_known(number):
+def find_known(number): # функція для пошуку i-того коефіцієнта стовпчика my
     need_a = 0
     for j in range(N):
         need_a += average_y[j] * matrix_x[j][number - 1] / 15
