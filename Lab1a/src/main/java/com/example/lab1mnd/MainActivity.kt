@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
     private var input: EditText? = null
     private var btn: Button? = null
     private var res: TextView? = null
+    private var count: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +26,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun task() {
-        val n = this.input?.text.toString().toLong()
-        this.res?.text = this.fermatFactorization(n).toString()
+        try {
+            val n = this.input?.text.toString().toLong()
+            this.res?.text = this.fermatFactorization(n)
+                .toString() + " кількість ітерацій: " + this.count.toString()
+        } catch (e: Exception) {
+            this.res?.text = "Введіть ціле число!"
+        }
     }
 
     fun fermatFactorization(n: Long): List<Long>? {
@@ -38,7 +44,8 @@ class MainActivity : AppCompatActivity() {
 
         if (a * a == n.toDouble()) return listOf(a.toLong(), a.toLong())
 
-        while(true) {
+        while (true) {
+            this.count++
             val b1 = a * a - n
             b = floor(sqrt(b1))
             if (b1 == b * b) break else a++
